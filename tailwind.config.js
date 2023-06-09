@@ -9,7 +9,8 @@ module.exports = {
         'lemon': '#E6E47C',
         'teal': '#B8D3CC',
         'olive': '#C7C798',
-        'vanilla': '#EFDCC9'
+        'vanilla': '#EFDCC9',
+        'white': '#ffffff',
       }
     },
   },
