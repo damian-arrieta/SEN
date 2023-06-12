@@ -1,37 +1,94 @@
-import React, { useState } from 'react'
+import { Fragment } from 'react';
+import { Disclosure } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Logo from '../assets/logo.png';
 
-export default function Navbar() {
+const navigation = [
+  { name: 'Categoria 1', href: '#', current: true },
+  { name: 'Categoria 2', href: '#', current: false },
+  { name: 'Categoria 3', href: '#', current: false },
+  { name: 'Categoria 4', href: '#', current: false },
+]
 
-  let links = [
-    {name: "Categoria", link: '/'},
-    {name: "Categoria", link: '/'},
-    {name: "Categoria", link: '/'},
-    {name: "Categoria", link: '/'},
-  ];
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
-  let [open, setOpen]=useState(false);
-
+export default function Example() {
   return (
-    <div className='shadow-md w-full fixed top-0 left-0'>
-      <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7'>
-        <div className='font-bold text-2x1 cursor-pointer flex items-center font-[Poppins] text-gray-800'>
-          <span>
-            SEN
-          </span>
-        </div>
-        <div onClick={()=>setOpen(!open)} className='text-3x1 absolute right-8 top-6 cursor-pointer md:hidden'>
-          <ion-icon name={open ? 'close' : 'menu'}></ion-icon>
-        </div>
-        <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 ':'top-[-490px]'}`}>
-          {
-            links.map((link)=>(
-              <li key={link.name} className='md:ml-8 text-xl'>
-                <a href={link.link} className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
+    <Disclosure as="nav" className="bg-white">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="relative flex h-16 items-center justify-between">
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                {/* Mobile menu button*/}
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center">
+                  <img
+                    className="block h-12 w-auto lg:hidden"
+                    src={Logo}
+                    alt="SEN"
+                  />
+                  <img
+                    className="hidden h-12 w-auto lg:block"
+                    src={Logo}
+                    alt="SEN"
+                  />
+                  <div className="hidden lg:block ml-4">
+                      <h2 className="text-dark text-center text-base font-medium">Salud · Estética · Nutrición</h2>
+                  </div>
+                </div>
+              </div>
+              <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    {navigation.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className={classNames(
+                          item.current ? 'hover:bg-olive hover:text-white text-dark' : 'text-dark hover:bg-olive hover:text-white',
+                          'block rounded-md px-3 py-2 text-base font-medium'
+                        )}
+                        aria-current={item.current ? 'page' : undefined}
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {navigation.map((item) => (
+                <Disclosure.Button
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  className={classNames(
+                    item.current ? 'bg-olive text-white' : 'text-dark-300 hover:bg-olive hover:text-white',
+                    'block rounded-md px-3 py-2 text-base font-medium'
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.name}
+                </Disclosure.Button>
+              ))}
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   )
 }
