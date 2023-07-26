@@ -1,94 +1,40 @@
-import { Fragment } from 'react';
-import { Disclosure } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
 import Logo from '../assets/logo.png';
+import { TiThMenu } from 'react-icons/ti';
+import { MdOutlineClose } from 'react-icons/md';
 
-const navigation = [
-  { name: 'Categoria 1', href: '#', current: true },
-  { name: 'Categoria 2', href: '#', current: false },
-  { name: 'Categoria 3', href: '#', current: false },
-  { name: 'Categoria 4', href: '#', current: false },
-]
+export default function Navbar() {
+  const [nav, setNav] = useState(false);
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+  const handleNav = () => {
+    setNav(!nav)
+  }
 
-export default function Example() {
   return (
-    <Disclosure as="nav" className="bg-white">
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-12 w-auto lg:hidden"
-                    src={Logo}
-                    alt="SEN"
-                  />
-                  <img
-                    className="hidden h-12 w-auto lg:block"
-                    src={Logo}
-                    alt="SEN"
-                  />
-                  <div className="hidden lg:block ml-4">
-                      <h2 className="text-dark text-center text-base font-medium">Salud · Estética · Nutrición</h2>
-                  </div>
-                </div>
-              </div>
-              <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'hover:bg-olive hover:text-white text-dark' : 'text-dark hover:bg-olive hover:text-white',
-                          'block rounded-md px-3 py-2 text-base font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-            </div>
-          </div>
+    <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white'>
+      <img className='h-12 w-auto' src={Logo} alt="SEN"/>
+      <h1 className='w-full text-3xl font-bold text-olive'>Salud, Estética y Nutrición</h1>
 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current ? 'bg-olive text-white' : 'text-dark-300 hover:bg-olive hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+      <ul className='hidden md:flex'>
+        <li className='p-4 text-olive'>Inicio</li>
+        <li className='p-4 text-olive'>SEN</li>
+        <li className='p-4 text-olive'>Servicios</li>
+        <li className='p-4 text-olive'>Contacto</li>
+      </ul>
+      <div onClick={handleNav} className='block md:hidden'>
+        {!nav ? <MdOutlineClose className='text-olive' size={20} /> : <TiThMenu className='text-olive' size={20} />}
+      
+        <div className={!nav ? 'fixed left-0 top-0 w-[60%] h-full border-r bg-olive ease-in-out duration-500' : 'fixed left-[-100%]'}>
+          <h1 className='m-4 w-full text-3xl font-bold text-white'>Salud, Estética y Nutrición</h1>
+
+          <ul className='p-4 uppercase'>
+            <li className='p-4 text-white'>Inicio</li>
+            <li className='p-4 text-white'>SEN</li>
+            <li className='p-4 text-white'>Servicios</li>
+            <li className='p-4 text-white'>Contacto</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   )
 }
