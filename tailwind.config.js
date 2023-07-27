@@ -11,6 +11,12 @@ module.exports = {
         'olive': '#C7C798',
         'vanilla': '#EFDCC9',
         'white': '#ffffff',
+      },
+      boxShadow: {
+        before: '-10px 10px 0 #ffffff',
+        before2: '-10px -10px 0 #ffffff',
+        after: '-10px 10px 0 #ffffff',
+        after2: '-10px 10px 0 #232949'
       }
     },
   },
